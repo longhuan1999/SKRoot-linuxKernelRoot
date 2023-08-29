@@ -191,7 +191,7 @@ static inline std::string parse_root_key_by_myself_path(const char* myself_path)
 
 	decodeRootKey = base64_decode(decodeRootKey);
 
-
+	TRACE("decodeRootKey:%s\n", decodeRootKey);
 	if (decodeRootKey.length() < (RANDOM_GUID_LEN + ROOT_KEY_LEN)) {
 		return {};
 	}
