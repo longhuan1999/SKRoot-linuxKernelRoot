@@ -1,0 +1,39 @@
+name: Build patch_kernel_root
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - '.github/workflows/patch_kernel_root.yml'
+      - 'patch_kernel_root/**'
+    
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - 'patch_kernel_root/**'
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./patch_kernel_root
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+      
+    - name: Set up MinGW
+      run: sudo apt-get update && sudo apt-get install -y mingw-w64
+      
+    - name: Build executable
+      run: |
+        x86_64-w64-mingw32-g++ -std=c++17 patch_kernel_root.cpp -o patch_kernel_root.exe -static -lstdc++
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: patch_kernel_root
+        path: patch_kernel_root/patch_kernel_root.exe

@@ -260,6 +260,8 @@ int main(int argc, char* argv[]) {
 	++argv;
 	--argc;
 
+	SetConsoleOutputCP(CP_UTF8);
+
 	cout << "本工具用于生成aarch64 Linux内核ROOT提权HOOK代码" << endl << endl;
 
 	if (argc < 1) {
